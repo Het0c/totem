@@ -1,4 +1,5 @@
-export type PrinterStatus = 'printing' | 'idle' | 'paused' | 'error';
+export type PrinterStatus = 'printing' | 'idle' | 'paused' | 'error' | 'disconnected';
+export type PrinterConnection = 'connected' | 'disconnected' | 'unreachable';
 
 export interface TemperatureReading { current: number; target: number; }
 export interface TelemetryPoint { time: string; hotend: number; bed: number; }
@@ -14,12 +15,15 @@ export interface PrinterSnapshot {
   remaining: string;
   cameraUrl?: string;
   activeJob: string;
+  connection: PrinterConnection;
+  stateText: string;
+  telemetry: TelemetryPoint[];
+  updatedAt: number;
 }
 
 export interface FleetMetrics {
-  filamentFlow: number;
-  fanSpeed: number;
-  successRate: number;
-  failureRate: number;
-  estimatedConsumptionKwh: number;
+  connected: number;
+  printing: number;
+  paused: number;
+  errors: number;
 }
